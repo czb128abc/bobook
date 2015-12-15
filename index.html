@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="js/bootstrap/css/bootstrap.css"/>
+    <link rel="stylesheet" href="js/highlight/styles/github.css"/>
+    <style>
+
+
+    </style>
+    <script src="js/highlight/highlight.pack.js"></script>
+    <script src="js/jquery-1.11.0.min.js"></script>
+    <script src="js/bootstrap/js/bootstrap.js"></script>
+    <script type="text/javascript" src="js/marked.js"></script>
+    <script type="text/javascript" src="js/book.js"></script>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="col-md-2">
+            <div id="sidebar"></div>
+        </div>
+        <div class="col-md-8">
+            <div class="container-fluid">
+                <div class="col-md-4"></div>
+                <div class="col-md-8">
+                    <div  class="view-pager btn-group btn-group-justified" role="group">
+                        <a role="button" class="btn btn-default btn-first" href="#">首页</a>
+                        <a role="button" class="btn btn-default btn-prev" href="#">上一章</a>
+                        <a role="button" class="btn btn-default btn-next" href="#">下一章</a>
+                        <a role="button" class="btn btn-default btn-last" href="#">尾页</a>
+                    </div>
+                </div>
+            </div>
+            <div id="main"></div>
+        </div>
+    </div>
+
+	<script type="text/javascript">
+		var book = new Book($('#sidebar'),$('#main'),$('.view-pager'));
+        book.init();
+	</script>
+</body>
+</html>

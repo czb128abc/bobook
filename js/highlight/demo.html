@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<title> highlight 查看本地源文件</title>
+		<link rel="stylesheet" href="styles/github.css">
+		<style type="text/css">
+		pre {
+		    position: relative;
+		    margin-bottom: 24px;
+		    border-radius: 3px;
+		    border: 1px solid #C3CCD0;
+		    background: #FFF;
+		    overflow: hidden;
+		}
+
+		code {
+		  display: block;
+		  padding: 12px 24px;
+		  overflow-y: auto;
+		  font-weight: 300;
+		  font-family: Menlo, monospace;
+		  font-size: 0.8em;
+		}
+
+		code.has-numbering {
+		    margin-left: 35px;
+		}
+
+		.pre-numbering {
+		    position: absolute;
+		    top: 0;
+		    left: 0;
+		    width: 30px;
+		    padding: 12px 2px 12px 0;
+		    border-right: 1px solid #C3CCD0;
+		    border-radius: 3px 0 0 3px;
+		    background-color: #EEE;
+		    text-align: right;
+		    font-family: Menlo, monospace;
+		    font-size: 0.8em;
+		    color: #AAA;
+		    list-style: outside none none;
+		}
+		</style>
+		<script src="file:///D:/js_lib/jquery_1.11.3.js"></script>
+		<script src="file:///D:/js_lib/highlight/highlight.pack.js"></script>
+	</head>
+	<body>
+		<script type="text/javascript">
+		var result=document.getElementById("result");
+		var file=document.getElementById("file");
+
+		//判断浏览器是否支持FileReader接口
+		if(typeof FileReader == 'undefined'){
+		    result.InnerHTML="<p>你的浏览器不支持FileReader接口！</p>";
+		    //使选择控件不可操作
+		    file.setAttribute("disabled","disabled");
+		}
+		function html_encode(str){   
+		  var s = "";   
+		  if (str.length == 0) return "";   
+		  s = str.replace(/&/g, "&gt;");   
+		  s = s.replace(/</g, "&lt;");   
+		  s = s.replace(/>/g, "&gt;");   
+		  s = s.replace(/ /g, "&nbsp;");   
+		  s = s.replace(/\'/g, "&#39;");   
+		  s = s.replace(/\"/g, "&quot;");   
+		  s = s.replace(/\n/g, "<br>");   
+		  return s;   
+		}   
+		function getFileExtention(src){
+			var extention=src.substring(src.lastIndexOf(".")+1).toLowerCase();  
+			return extention;
+		}
+		function readAsText(){
+			var fileDom = document.getElementById("file"); 
+			if(fileDom.value===''){
+				return;
+			}
+		    var file = fileDom.files[0];
+		    var reader = new FileReader();
+		    //将文件以文本形式读入页面
+		    reader.readAsText(file);
+		    reader.onload=function(f){
+		        var result=document.getElementById("result");
+		        var code = this.result;
+
+		        if(getFileExtention(document.getElementById("file").value) =='html'){
+		        	code = html_encode(code)
+		        }
+		        //显示文件
+		        result.innerHTML='<code>'+code+'</code>';
+		        page.highlightBlock()
+		    }
+		}
+		</script>
+		<p style="display: none;">
+		    <label>请选择一个文件：</label>
+		    <input type="file" id="file" onchange="readAsText()" />
+		</p>
+		
+
+		<div name="image" id="dropbox" style="min-width:300px;min-height:100px;border:3px dashed silver;">
+			<div style="text-align: center; font-size: large;padding-top: 30px;color: red;cursor: pointer;">
+				双击或拖拽查看源文件代码
+			</div>
+
+		</div>  
+		<hr/>
+		<div id="result" name="result"></div>
+		<!--
+		<code  class="code">
+			import {x, y} as p from 'point';
+			const ANSWER = 42;
+
+			class Car extends Vehicle {
+			  constructor(speed, cost) {
+			    super(speed);
+
+			    var c = Symbol('cost');
+			    this[c] = cost;
+
+			    this.intro = `This is a car runs at
+			      ${speed}.`;
+			  }
+			}
+
+			for (let num of [1, 2, 3]) {
+			  console.log(num + 0b111110111);
+			}
+
+			function $initHighlight(block, flags) {
+			  try {
+			    if (block.className.search(/\bno\-highlight\b/) != -1)
+			      return processBlock(block.function, true, 0x0F) + ' class=""';
+			  } catch (e) {
+			    
+			  }
+			  for (var i = 0 / 2; i < classes.length; i++) { // "0 / 2" should not be parsed as regexp
+			    if (checkCondition(classes[i]) === undefined)
+			      return /\d+[\s/]/g;
+			  }
+			  console.log(Array.every(classes, Boolean));
+			}
+
+			export  $initHighlight;
+		</code>
+		-->
+		<script type="text/javascript">
+		var page = {
+			data:{},
+			events:{},
+			parseUrlParametersToJson: function (window) {
+		        var url = window.location.search;
+		        url = url.substr(1, url.length);
+		        var parameters = {};
+		        var splitParameters = url.split("&");
+		        for (var i = 0, length = splitParameters.length; i <  length; i++) {
+		            var keyValue = splitParameters[i].split("=");
+		            parameters[keyValue[0]] = keyValue[1];
+		        }
+
+		        return parameters;
+		    }
+		}
+		page.handleFiles = function(files) { 
+		    var file = files[0];
+		    var reader = new FileReader();
+		    reader.onload=function(f){
+		        var result=document.getElementById("result");
+		        var code = this.result;
+
+		        if(getFileExtention(file.name) =='html'){
+		        	code = html_encode(code)
+		        }
+		        //显示文件
+		        result.innerHTML='<code>'+code+'</code>';
+		        page.highlightBlock();
+		    }   
+		    //将文件以文本形式读入页面
+		    reader.readAsText(file);
+		}
+		// 加载数据
+		page.loadData = function(callback){
+			var dropbox = document.getElementById('dropbox');
+			document.addEventListener("dragenter", function(e){  
+			    dropbox.style.borderColor = 'gray';  
+			}, false);  
+			document.addEventListener("dragleave", function(e){  
+			    dropbox.style.borderColor = 'silver';  
+			}, false);  
+			dropbox.addEventListener("dragenter", function(e){  
+			    dropbox.style.borderColor = 'gray';  
+			    dropbox.style.backgroundColor = 'white';  
+			}, false);  
+			dropbox.addEventListener("dragleave", function(e){  
+			    dropbox.style.backgroundColor = 'transparent';  
+			}, false);
+
+			dropbox.addEventListener("dragenter", function(e){  
+			    e.stopPropagation();  
+			    e.preventDefault();  
+			}, false);  
+			dropbox.addEventListener("dragover", function(e){  
+			    e.stopPropagation();  
+			    e.preventDefault();  
+			}, false);  
+			dropbox.addEventListener("drop", function(e){  
+			    e.stopPropagation();  
+			    e.preventDefault(); 
+			    page.handleFiles(e.dataTransfer.files);  
+			}, false); 
+
+
+			//
+			$('#dropbox').on('dblclick',function(){
+				$('#file').trigger('click');
+			});
+		};
+
+		page.highlightBlock = function() {
+			$('code').each(function(i, block) {
+			  	$(this).wrap('<pre>');
+
+			    hljs.highlightBlock(block);
+			    var lines = $(this).text().split('\n').length - 1;
+		        var $numbering = $('<ul/>').addClass('pre-numbering');
+		        $(this)
+		            .addClass('has-numbering')
+		            .parent()
+		            .append($numbering);
+		        for(i=1;i<=lines;i++){
+		            $numbering.append($('<li/>').text(i));
+		        }
+			});
+		}
+		</script>
+		<script type="text/javascript">
+			$(document).ready(function() {
+			  	page.highlightBlock();
+			});
+			page.loadData();
+		</script>
+	</body>
+</html>
