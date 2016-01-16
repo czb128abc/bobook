@@ -5,9 +5,9 @@ function Book ($viewCatalog,$viewScreen,$viewPager) {
 };
 Book.prototype = {
 
-    //Ä¿Â¼ÊÓÍ¼
+    //Ä¿Â¼ï¿½ï¿½Í¼
     $viewCatalog:null,
-    //ÕýÎÄÊÓÍ¼
+    //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¼
     $viewScreen:null,
     catalogUrl:'sidebar.md',
     dataMap:{ },
@@ -49,7 +49,7 @@ Book.prototype = {
             _this.dataMap = {};
             _this.$viewCatalog.find('ol li a').each(function(item){
                 var hrefStr = $(this).attr('href');
-                var url = hrefStr.replace('#','')+'.md';
+                var url = hrefStr;
                 _this.dataMap[item]=url;
                 _this.dataSet.push(url);
                 $(this).attr('data-index',item);
@@ -57,9 +57,10 @@ Book.prototype = {
             // bind event
             _this.$viewCatalog.on('click','ol li a',function (ev){
                 var hrefStr = $(this).attr('href');
-                var url = hrefStr.replace('#','')+'.md';
+                var url = hrefStr;
                 _this.rendViewScreen(url);
                 _this.currentIndex = $(this).attr('data-index');
+                return false;
             });
         });
     },
