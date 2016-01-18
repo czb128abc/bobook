@@ -82,9 +82,9 @@ function readFirstTitle(text){
 	//
 	//1. [ECMAScript 6简介](#docs/intro)
 	var set = loadFileByPath(pathName),
-		nextPathSet = [];
+		nextPathSet = [],
 		mkStrSet = [];
-	console.log(set);
+	console.dir(set);
 	mkStrSet.push('#目录');
 
 	for (var i = 0; i < set.length; i++) {
@@ -94,20 +94,21 @@ function readFirstTitle(text){
 		if(set.length>i+1){
 			nextPathSet = set[i+1].path.split('/');
 		}
-
+		mkStrSet.push('1. ['+set[i].fileName+' ('+set[i].nickName+')]('+set[i].path+')');
 		if(nextPathSet.length>0){
 			nextPathSet.pop();
 			nextPath = nextPathSet.join('/');
 
 			currentPathSet.pop();
 			currentPath = currentPathSet.join('/');
-			//console.log(currentPath+'     '+nextPath)
-			if(currentPath!== nextPath){
+			console.log(currentPath+'     '+nextPath)
+			if(currentPath!== nextPath && '' !== nextPath){
+				console.log('-- now add catalog -> ' + nextPath)
 				mkStrSet.push('');
-				mkStrSet.push('## :'+currentPath)
+				mkStrSet.push('## :'+nextPath);
 			}
 		}
-		mkStrSet.push('1. ['+set[i].fileName+' ('+set[i].nickName+')]('+set[i].path+')');
+
 
 	};
 	for (var i = 0; i < mkStrSet.length; i++) {
