@@ -1,5 +1,7 @@
 # bobook 相关
 
+url: [https://czb128abc.github.io/bobook/](https://czb128abc.github.io/bobook/)
+
 ## 相关 note
 
 ```sh
